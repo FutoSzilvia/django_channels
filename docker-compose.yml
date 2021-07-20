@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  app:
+    build: .
+    command: bash -c "python manage.py runserver 0.0.0.0:5230"
+    volumes:
+      - .:/code
+    ports:
+      - "5230:5230"
+
+volumes:
+  postgres_data: {}
