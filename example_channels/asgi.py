@@ -1,9 +1,21 @@
 import os
 
-#from django.core.asgi import get_asgi_application
-from channels.layers import get_channel_layer
+import django
+from django.core.asgi import get_asgi_application
+from channels.http import AsgiHandler
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
 
-#os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'example_channels.settings')
+import routing
 
-#application = get_asgi_application()
-channel_layer = get_channel_layer()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings') #or .settings
+django.setup()
+
+application = ProtocolTypeRouter({
+  "http": get_asgi_application(),
+    "ws": AuthMiddlewareStack(
+        URLRouter(
+            routing.websocket_urlpatterns
+        )
+    ),
+})

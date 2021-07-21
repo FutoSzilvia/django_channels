@@ -1,6 +1,6 @@
 from django.contrib.auth import user_logged_in, user_logged_out
 from django.dispatch import receiver
-from example.models import LoggedInUser
+from models import LoggedInUser
 
 
 @receiver(user_logged_in)
